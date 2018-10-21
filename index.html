@@ -39,7 +39,8 @@
       objDiv.scrollTop = objDiv.scrollHeight;
     }
     function liked(){
-            lButton.innerHTML = ((parseInt((lButton.innerHTML)[0])) + 1) + "👍";
+      var lButton = document.getElementById("thumbs");
+      lButton.innerHTML = ((parseInt((lButton.innerHTML)[0])) + 1) + "👍";
     }
     function clearChat(){
       document.cookie = "chat=;";

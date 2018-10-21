@@ -43,6 +43,7 @@ app.use(bodyParser.urlencoded({
 
 app.get('/', function(req, res){
 	res.sendFile(__dirname + '/index.html');
+	console.log(req);
 });
 
 app.post('/store', function(req, res) {
