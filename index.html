@@ -5,10 +5,12 @@
   
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+  <!-- chat box script -->
   <script>
     $(function () {
       var socket = io();
@@ -24,6 +26,39 @@
   </script>
 </head>
 <body style="height: 100vh">
+
+  <!-- navbar -->
+  <nav class="navbar navbar-lg navbar-light bg-light">
+    <h2 class="navbar-brand">You are currently on CSE 351 @ University of Washington</h2>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <form style="width: 90%" action="" method="POST">
+        <div class="row">
+          <div class="col">
+            <label>School</label>
+            <select class="form-control">
+              <option>University of Washington</option>
+              <option>Oregon State University</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Course</label>
+            <select class="form-control">
+              <option>CSE 351</option>
+              <option>CSE 311</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <button type="submit" class="btn btn-outline-dark" style="margin: 15px">Join Channel</button>
+        </div>
+      </form>
+    </div>
+  </nav>
+
   <div class="container-fluid">
    <div class="row">
 
@@ -65,11 +100,5 @@
       </form>
     </div>
   </div>
-
-  <!-- add previous blog posts -->
-  <script>
-  </script>
-
-</div>
 </body>
 </html>
