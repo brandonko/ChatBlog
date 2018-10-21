@@ -4,12 +4,14 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const userName = "Ronan";
 
 // Define schema for post
 const PostSchema = new mongoose.Schema({
 	title: { type: String, trim: true },
-	description: { type: String, trim: true },
-	content: { type: String, trim: true }
+	author: { type: String, default: userName },
+	content: { type: String, trim: true },
+	likes: { type: Number, default: 0 }
 }, 
 {timestamps: true});
 const Post = mongoose.model('Post', PostSchema);
