@@ -1,9 +1,7 @@
 <!doctype html>
-<html>
+<html lang="en" dir="ltr">
 <head>
   <title>Study Buddy Channels</title>
-  
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -14,52 +12,61 @@
   <script>
    window.onload = function()
    {
-      
-       document.getElementById("messages").innerHTML = getCookie("chat");
-        scrollDown();
-
+     document.getElementById("messages").innerHTML = getCookie("chat");
+     scrollDown();
    };
-   function getCookie(cname) {
-       var name = cname + "=";
-       var decodedCookie = decodeURIComponent(document.cookie);
-       var ca = decodedCookie.split(';');
-       for(var i = 0; i <ca.length; i++) {
-           var c = ca[i];
-           while (c.charAt(0) == ' ') {
-               c = c.substring(1);
-           }
-           if (c.indexOf(name) == 0) {
-               return c.substring(name.length, c.length);
-           }
+   function getCookie(cname)
+   {
+     var name = cname + "=";
+     var decodedCookie = decodeURIComponent(document.cookie);
+     var ca = decodedCookie.split(';');
+     for(var i = 0; i <ca.length; i++)
+     {
+       var c = ca[i];
+       while (c.charAt(0) == ' ')
+       {
+         c = c.substring(1);
        }
-       return "";
+       if (c.indexOf(name) == 0)
+       {
+         return c.substring(name.length, c.length);
+       }
+     }
+     return "";
    }
-    function scrollDown(){
+    function scrollDown()
+    {
       var objDiv = document.getElementById("scroll");
       objDiv.scrollTop = objDiv.scrollHeight;
     }
-    function liked(){
+    function liked()
+    {
       var lButton = document.getElementById("thumbs");
       lButton.innerHTML = ((parseInt((lButton.innerHTML)[0])) + 1) + "👍";
       lButton.disabled = true;
     }
-    function clearChat(){
+    function clearChat()
+    {
       document.cookie = "chat=;";
       document.getElementById("messages").innerHTML = "";
     }
 
     // Function for adding to chat log
-    $(function () {
+    $(function ()
+    {
       // NEED TO FIND ACTUAL NAME
       var name = "Brandon: "
       var socket = io();
-      $('#chatbox').submit(function(){
+      $('#chatbox').submit(function()
+      {
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
       });
-      socket.on('chat message', function(msg){
-        if (msg.length != 0) {
+      socket.on('chat message', function(msg)
+      {
+        if (msg.length != 0)
+        {
           var lis = document.createElement("li");
           lis.classList.add("list-group-item");
           var bol = document.createElement("b");
@@ -109,20 +116,20 @@
     </div>
   </nav>
 
-  <div class="container-fluid">    
-    <div class="row">  
+  <div class="container-fluid">
+    <div class="row">
 
-     <!-- chat box for channel -->     
-     <div class="col" style="height: 90vh; max-height: 85vh; border-width: 1px; border: solid; margin: 1%">       
+     <!-- chat box for channel -->
+     <div class="col" style="height: 90vh; max-height: 85vh; border-width: 1px; border: solid; margin: 1%">
       <h1 style="display: inline-block;">Channel Chat</h1>
       <button class="btn btn-outline-dark" onclick="clearChat()"  style="float: right; margin: 2%;">
-      Clear Chat</button>         
-      <div id="scroll" style="vertical-align: bottom; overflow: auto; max-height: 85%">         
-        <ul class="list-group" id="messages"></ul>         
-        <form action="" id="chatbox" style="position: absolute; bottom: 0%; left: 0%; width: 100%;">           
-          <input id="m" autocomplete="off" placeholder="Press Enter To Send" style="width: 100%; margin-top: 10px">         
-        </form>       
-      </div>     
+      Clear Chat</button>
+      <div id="scroll" style="vertical-align: bottom; overflow: auto; max-height: 85%">
+        <ul class="list-group" id="messages"></ul>
+        <form action="" id="chatbox" style="position: absolute; bottom: 0%; left: 0%; width: 100%;">
+          <input id="m" autocomplete="off" placeholder="Press Enter To Send" style="width: 100%; margin-top: 10px">
+        </form>
+      </div>
     </div>
 
     <!-- Blog Posts -->
@@ -130,7 +137,7 @@
       <h1 style="margin-top: 10px"> Channel Posts </h1>
       <div class="row">
         <div class="col-4">
-          Orgainze posts by: 
+          Orgainze posts by:
         </div>
         <div class="col">
           <select class="form-control">
@@ -153,7 +160,8 @@
         </div>
       </div>
       <script>
-        function like() {
+        function like()
+        {
           $('#test').innerHTML = "fawefewf";
         }
       </script>

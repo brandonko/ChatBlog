@@ -1,0 +1,145 @@
+doctype html
+html(lang='en', dir='ltr')
+  head
+    title Study Buddy Channels
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO', crossorigin='anonymous')
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
+    script(src='/socket.io/socket.io.js')
+    // chat box script
+    script.
+      window.onload = function()
+      {
+      document.getElementById("messages").innerHTML = getCookie("chat");
+      scrollDown();
+      };
+      function getCookie(cname)
+      {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i <ca.length; i++)
+      {
+      var c = ca[i];
+      while (c.charAt(0) == ' ')
+      {
+      c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0)
+      {
+      return c.substring(name.length, c.length);
+      }
+      }
+      return "";
+      }
+      function scrollDown()
+      {
+      var objDiv = document.getElementById("scroll");
+      objDiv.scrollTop = objDiv.scrollHeight;
+      }
+      function liked()
+      {
+      var lButton = document.getElementById("thumbs");
+      lButton.innerHTML = ((parseInt((lButton.innerHTML)[0])) + 1) + "👍";
+      lButton.disabled = true;
+      }
+      function clearChat()
+      {
+      document.cookie = "chat=;";
+      document.getElementById("messages").innerHTML = "";
+      }
+      // Function for adding to chat log
+      $(function ()
+      {
+      // NEED TO FIND ACTUAL NAME
+      var name = "Brandon: "
+      var socket = io();
+      $('#chatbox').submit(function()
+      {
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+      });
+      socket.on('chat message', function(msg)
+      {
+      if (msg.length != 0)
+      {
+      var lis = document.createElement("li");
+      lis.classList.add("list-group-item");
+      var bol = document.createElement("b");
+      bol.innerHTML = name;
+      lis.appendChild(bol);
+      lis.appendChild(document.createTextNode(msg));
+      document.getElementById('messages').appendChild(lis);
+      var cook = "chat="+document.getElementById("messages").innerHTML+";";
+      document.cookie = cook;
+      scrollDown();
+      }
+      });
+      });
+  body(style='height: 100vh')
+    // navbar
+    nav.navbar.navbar-lg.navbar-light.bg-light
+      h2.navbar-brand You are currently on CSE 351 @ University of Washington
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        form(style='width: 90%', action='', method='POST')
+          .row
+            .col
+              label School
+              select.form-control
+                option University of Washington
+                option Oregon State University
+            .col
+              label Course
+              select.form-control
+                option CSE 351
+                option CSE 311
+          .row
+            button.btn.btn-outline-dark(type='submit', style='margin: 15px') Join Channel
+    .container-fluid
+      .row
+        // chat box for channel
+        .col(style='height: 90vh; max-height: 85vh; border-width: 1px; border: solid; margin: 1%')
+          h1(style='display: inline-block;') Channel Chat
+          button.btn.btn-outline-dark(onclick='clearChat()', style='float: right; margin: 2%;')
+            | Clear Chat
+          #scroll(style='vertical-align: bottom; overflow: auto; max-height: 85%')
+            ul#messages.list-group
+            form#chatbox(action='', style='position: absolute; bottom: 0%; left: 0%; width: 100%;')
+              input#m(autocomplete='off', placeholder='Press Enter To Send', style='width: 100%; margin-top: 10px')
+        // Blog Posts
+        .col
+          h1(style='margin-top: 10px')  Channel Posts 
+          .row
+            .col-4
+              | Orgainze posts by:
+            .col
+              select.form-control
+                option Newest
+                option Most Liked
+                option Oldest
+          // Demo post
+          #postList
+            .card(style='width: 100%; margin-top: 10px; background-color: #fcfcfc')
+              .card-body
+                h5.card-title Study Session at 5pm
+                h6.card-subtitle.mb-2.text-muted Posted by Raymond Huang
+                p.card-text
+                  | We will be reviewing for the next midterm (Monday 10/22) in the CSE Lab06. Come and ask questions! Bring the practice midterm, we will be going over it as well.
+                button#thumbs.btn.btn-outline-dark(onclick='liked()') 3👍
+          script.
+            function like()
+            {
+            $('#test').innerHTML = "fawefewf";
+            }
+          // submit a post
+          form(action='/store', method='POST')
+            .card(style='width: 100%; margin-top: 10px; background-color: #fcfcfc')
+              .card-body
+                h5.card-title Write a Post
+                input.form-control(name='title', style='margin-top: 10px', type='text', placeholder='Title of Post')
+                textarea.form-control(name='content', style='margin-top: 10px', placeholder='Content')
+                button.btn.btn-outline-dark.btn-block(type='submit', style='margin-top: 10px') Submit
