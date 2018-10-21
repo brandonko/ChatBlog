@@ -12,7 +12,15 @@
 
   <!-- chat box script -->
   <script>
+    function scrollDown(){
+      var objDiv = document.getElementById("scroll");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    };
+
+    // Function for adding to chat log
     $(function () {
+      // NEED TO FIND ACTUAL NAME
+      var name = "Brandon: "
       var socket = io();
       $('#chatbox').submit(function(){
         socket.emit('chat message', $('#m').val());
@@ -20,7 +28,11 @@
         return false;
       });
       socket.on('chat message', function(msg){
-        $('#messages').append($('<li class="list-group-item">').text(msg));
+        if (msg.length != 0) {
+          msg = name + msg;
+          $('#messages').append($('<li class="list-group-item">').text(msg));
+          scrollDown();
+        }
       });
     });
   </script>
@@ -59,36 +71,56 @@
     </div>
   </nav>
 
-  <div class="container-fluid">
-   <div class="row">
+  <div class="container-fluid">    
+    <div class="row">  
 
-    <!-- chat box for channel -->
-    <div class="col">
-      <h1>Channel Chat</h1>
-      <ul class="list-group" id="messages"></ul>
-      <form action="" id="chatbox">
-        <input id="m" autocomplete="off" placeholder="Press Enter To Send" style="width: 100%">
-      </form>
+     <!-- chat box for channel -->     
+     <div class="col" style="height: 90vh; max-height: 85vh; border-width: 1px; border: solid; margin: 1%">       
+      <h1>Channel Chat</h1>         
+      <div id="scroll" style="vertical-align: bottom; overflow: auto; max-height: 85%">         
+        <ul class="list-group" id="messages"></ul>         
+        <form action="" id="chatbox" style="position: absolute; bottom: 0%; left: 0%; width: 100%;">           
+          <input id="m" autocomplete="off" placeholder="Press Enter To Send" style="width: 100%">         
+        </form>       
+      </div>     
     </div>
 
     <!-- Blog Posts -->
     <div class="col">
-      <h1> Channel Posts </h1>
-
-      <!-- template card -->
-      <div id="postList">
-        <div class="card" style="width: 18rem; margin-top: 10px">
-          <div class="card-body">
-            <h5 class="card-title">Post title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Post subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
+      <h1 style="margin-top: 10px"> Channel Posts </h1>
+      <div class="row">
+        <div class="col-4">
+          Orgainze posts by: 
+        </div>
+        <div class="col">
+          <select class="form-control">
+            <option>Newest</option>
+            <option>Most Liked</option>
+            <option>Oldest</option>
+          </select>
         </div>
       </div>
 
+      <!-- Demo post -->
+      <div id="postList">
+        <div class="card" style="width: 100%; margin-top: 10px; background-color: #fcfcfc">
+          <div class="card-body">
+            <h5 class="card-title">Study Session at 5pm</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Posted by Raymond Huang</h6>
+            <p class="card-text">We will be reviewing for the next midterm (Monday 10/22) in the CSE Lab06. Come and ask questions! Bring the practice midterm, we will be going over it as well.</p>
+            <button class="btn btn-outline-dark" id="thumbs" onclick="like()">3👍</button>
+          </div>
+        </div>
+      </div>
+      <script>
+        function like() {
+          $('#test').innerHTML = "fawefewf";
+        }
+      </script>
+
       <!-- submit a post -->
-      <form action="/store" method="POST">
-        <div class="card" style="width: 18rem; margin-top: 10px">
+      <form action="/store" method="POST" >
+        <div class="card" style="width: 100%; margin-top: 10px; background-color: #fcfcfc" >
           <div class="card-body">
             <h5 class="card-title">Write a Post</h5>
             <input name="title" class="form-control" style="margin-top: 10px" type="text" placeholder="Title of Post">
