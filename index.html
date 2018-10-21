@@ -15,7 +15,10 @@
     function scrollDown(){
       var objDiv = document.getElementById("scroll");
       objDiv.scrollTop = objDiv.scrollHeight;
-    };
+    }
+    function liked(){
+            lButton.innerHTML = ((parseInt((lButton.innerHTML)[0])) + 1) + "👍";
+    }
 
     // Function for adding to chat log
     $(function () {
@@ -108,7 +111,7 @@
             <h5 class="card-title">Study Session at 5pm</h5>
             <h6 class="card-subtitle mb-2 text-muted">Posted by Raymond Huang</h6>
             <p class="card-text">We will be reviewing for the next midterm (Monday 10/22) in the CSE Lab06. Come and ask questions! Bring the practice midterm, we will be going over it as well.</p>
-            <button class="btn btn-outline-dark" id="thumbs" onclick="like()">3👍</button>
+            <button class="btn btn-outline-dark" id="thumbs" onclick="liked()">3👍</button>
           </div>
         </div>
       </div>
