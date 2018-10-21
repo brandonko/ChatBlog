@@ -41,6 +41,10 @@
     function liked(){
             lButton.innerHTML = ((parseInt((lButton.innerHTML)[0])) + 1) + "👍";
     }
+    function clearChat(){
+      document.cookie = "chat=;";
+      document.getElementById("messages").innerHTML = "";
+    }
 
     // Function for adding to chat log
     $(function () {
@@ -103,7 +107,9 @@
 
      <!-- chat box for channel -->     
      <div class="col" style="height: 90vh; max-height: 85vh; border-width: 1px; border: solid; margin: 1%">       
-      <h1>Channel Chat</h1>         
+      <h1 style="display: inline-block;">Channel Chat</h1>
+      <button class="btn btn-outline-dark" id="thumbs" onclick="clearChat()"  style="float: right; margin: 2%;">
+      Clear Chat</button>         
       <div id="scroll" style="vertical-align: bottom; overflow: auto; max-height: 85%">         
         <ul class="list-group" id="messages"></ul>         
         <form action="" id="chatbox" style="position: absolute; bottom: 0%; left: 0%; width: 100%;">           
