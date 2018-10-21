@@ -7,23 +7,32 @@ const bodyParser = require('body-parser');
 
 // Define schema for post
 const PostSchema = new mongoose.Schema({
-	title: String,
-	description: String,
-	content: String
+	title: { type: String, trim: true },
+	description: { type: String, trim: true },
+	content: { type: String, trim: true }
 }, 
 {timestamps: true});
 const Post = mongoose.model('Post', PostSchema);
 module.exports = Post;
 
-// Open up the DB
-mongoose.connect("mongodb://localhost:27017/study_buddies", { useNewUrlParser: true });
+// Define schema for user credentials
+const UserSchema = new mongoose.Schema({
+	first_name: { type: String, trim: true },
+	last_name: { type: String, trim: true },
+	email: { type: String, trim: true },
+	university: { type: String, trim: true }
+}, 
+{timestamps: true});
+const User = mongoose.model('User', UserSchema);
+module.exports = User;
+
+// Open up the DB for post
+mongoose.connect("mongodb://localhost:27017/StudyBuddyPosts", { useNewUrlParser: true });
 const db = mongoose.connection;
-db.once('open', () => {
-  console.log("Connected to mongodb and working!");
-});
-db.on('error', (err) => {
-  console.error("Error!: ", err, "\n");
-});
+db.once('open', () => { console.log("Connected to mongodb and working!")});
+db.on('error', (err) => {console.error("Error!: ", err, "\n")});
+
+// Need to set up db for user credentials
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
