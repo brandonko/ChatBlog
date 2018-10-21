@@ -41,6 +41,7 @@
     function liked(){
       var lButton = document.getElementById("thumbs");
       lButton.innerHTML = ((parseInt((lButton.innerHTML)[0])) + 1) + "👍";
+      lButton.disabled = true;
     }
     function clearChat(){
       document.cookie = "chat=;";
@@ -59,8 +60,13 @@
       });
       socket.on('chat message', function(msg){
         if (msg.length != 0) {
-          msg = name + msg;
-          $('#messages').append($('<li class="list-group-item">').text(msg));
+          var lis = document.createElement("li");
+          lis.classList.add("list-group-item");
+          var bol = document.createElement("b");
+          bol.innerHTML = name;
+          lis.appendChild(bol);
+          lis.appendChild(document.createTextNode(msg));
+          document.getElementById('messages').appendChild(lis);
           var cook = "chat="+document.getElementById("messages").innerHTML+";";
           document.cookie = cook;
           scrollDown();
@@ -109,7 +115,7 @@
      <!-- chat box for channel -->     
      <div class="col" style="height: 90vh; max-height: 85vh; border-width: 1px; border: solid; margin: 1%">       
       <h1 style="display: inline-block;">Channel Chat</h1>
-      <button class="btn btn-outline-dark" id="thumbs" onclick="clearChat()"  style="float: right; margin: 2%;">
+      <button class="btn btn-outline-dark" onclick="clearChat()"  style="float: right; margin: 2%;">
       Clear Chat</button>         
       <div id="scroll" style="vertical-align: bottom; overflow: auto; max-height: 85%">         
         <ul class="list-group" id="messages"></ul>         
